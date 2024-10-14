@@ -15,17 +15,15 @@ const HomeScreen = () => {
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const pan = useRef(new Animated.ValueXY()).current;
-  const [textColor, setTextColor] = useState("#000"); // Initial text color
+  const [textColor, setTextColor] = useState("#000");
 
   useEffect(() => {
-    // Fade-in animation
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 2000,
       useNativeDriver: true,
     }).start(() => {
-      // Change text color once the fade-in animation completes
-      setTextColor("#FF6347"); // Change to a new color, e.g., Tomato red
+      setTextColor("#FF6347");
     });
   }, [fadeAnim]);
 
@@ -53,9 +51,16 @@ const HomeScreen = () => {
     })
   ).current;
 
+  const navigateToImagePicker = () => {
+    navigation.navigate("Image Picker");
+  };
+
+  const navigateToLocation = () => {
+    navigation.navigate("Location");
+  };
+
   return (
     <View style={styles.container}>
-      {/* Fading animated text with color change */}
       <Animated.Text
         style={[styles.animatedText, { opacity: fadeAnim, color: textColor }]}
       >
@@ -63,6 +68,15 @@ const HomeScreen = () => {
       </Animated.Text>
 
       <Text>Email: {auth.currentUser?.email}</Text>
+
+      <TouchableOpacity onPress={navigateToImagePicker} style={styles.button}>
+        <Text style={styles.buttonText}>Go to Image Picker</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={navigateToLocation} style={styles.button}>
+        <Text style={styles.buttonText}>Go to Location</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity onPress={handleLogOut} style={styles.button}>
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>
@@ -96,7 +110,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 20,
   },
   buttonText: {
     color: "white",
